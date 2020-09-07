@@ -61,9 +61,9 @@ export default new Vuex.Store({
     },
     getRedirectUrl( {commit}, data ) {
       return apiClient
-        .get("/api/redirect-url/", data)
+        .get("/api/redirect-url?short="  + data.redirect )
         .then(response => {
-          console.log('[SUCCESS] getRedirectUrl: get(/api/redirect-url/)', response);
+          console.log('[SUCCESS] getRedirectUrl: get(/api/redirect-url/)', response.data);
           commit("SET_REDIRECT_URL", response.data);
           commit("SET_REDIRECT_STATUS", true);
         })

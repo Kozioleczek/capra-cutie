@@ -51,7 +51,7 @@ const routes = [
       import(/* webpackChunkName: "login" */ "../views/My-Links.vue")
   },
   {
-    path: "/:url",
+    path: "/:redirect",
     props: true,
     name: "Redirect",
     component: () =>
