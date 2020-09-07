@@ -3,20 +3,20 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-const guest = (to, from, next) => {
-  if (!localStorage.getItem("authToken")) {
-    return next();
-  } else {
-    return next("/");
-  }
-};
-const auth = (to, from, next) => {
-  if (localStorage.getItem("authToken")) {
-    return next();
-  } else {
-    return next("/login");
-  }
-};
+// const guest = (to, from, next) => {
+//   if (!localStorage.getItem("authToken")) {
+//     return next();
+//   } else {
+//     return next("/");
+//   }
+// };
+// const auth = (to, from, next) => {
+//   if (localStorage.getItem("authToken")) {
+//     return next();
+//   } else {
+//     return next("/login");
+//   }
+// };
 
 const routes = [
   {
@@ -35,25 +35,24 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    beforeEnter: guest,
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/Auth/Login.vue")
   },
-  {
-    path: "/register",
-    name: "Register",
-    beforeEnter: guest,
-    component: () =>
-      import(/* webpackChunkName: "register" */ "../views/Auth/Register.vue")
-  },
-  {
-    path: "/verify/:hash",
-    name: "Verify",
-    beforeEnter: auth,
-    props: true,
-    component: () =>
-      import(/* webpackChunkName: "verify" */ "../views/Auth/Verify.vue")
-  }
+  // {
+  //   path: "/register",
+  //   name: "Register",
+  //   beforeEnter: guest,
+  //   component: () =>
+  //     import(/* webpackChunkName: "register" */ "../views/Auth/Register.vue")
+  // },
+  // {
+  //   path: "/verify/:hash",
+  //   name: "Verify",
+  //   beforeEnter: auth,
+  //   props: true,
+  //   component: () =>
+  //     import(/* webpackChunkName: "verify" */ "../views/Auth/Verify.vue")
+  // }
 ];
 
 const router = new VueRouter({

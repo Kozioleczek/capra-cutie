@@ -1,66 +1,52 @@
-import axios from "axios";
+import apiClient from '../services/api';
 
 export default {
   namespaced: true,
 
   state: {
+    // userCreditials: {
+    //   email: '',
+    //   password: '',
+    // },
     userData: null
   },
 
   getters: {
-    user: state => state.userData
+    user: state => state.userData,
+    // userCreditials: state => state.userCreditials,
   },
 
   mutations: {
-    setUserData(state, user) {
+    SET_USER_DATA(state, user) {
       state.userData = user;
-    }
+    },
+    // SET_USER_CREDITIALS(state, payload){
+    //   console.log('SET_USER_CREDITIALS: ', payload.email, payload.password);
+    //   Vue.set(state.userCreditials, state.userCreditials.email, payload.email);
+    //   Vue.set(state.userCreditials, state.userCreditials.password, payload.password);
+    // },
   },
 
   actions: {
-    getUserData({ commit }) {
-      axios
-        .get(process.env.VUE_APP_API_URL + "user")
-        .then(response => {
-          commit("setUserData", response.data);
-        })
-        .catch(() => {
-          localStorage.removeItem("authToken");
-        });
-    },
     sendLoginRequest({ commit }, data) {
-      commit("setErrors", {}, { root: true });
-      return axios
-        .post(process.env.VUE_APP_API_URL + "login", data)
+      return apiClient
+        .get("/sanctum/csrf-cookie")
         .then(response => {
-          commit("setUserData", response.data.user);
-          localStorage.setItem("authToken", response.data.token);
+          console.log('[SUCCESS] sendLoginRequest: get(/sanctum/csrf-cookie)', response);
+          console.log('[INFO] sendLoginRequest: post(/login)', data);
+          apiClient.post('/login', data)
+          .then(response => {
+            console.log('[SUCCESS] sendLoginRequest: post(/login)', response.data);
+            commit("SET_USER_DATA", response.data);
+          }).catch(error => {
+            console.log('[ERROR] sendLoginRequest: post(/login)', error.response.data);
+            commit("setErrors", error.response.data, {root: true});
+          });
+        })
+        .catch(error => {
+          console.log('[ERROR] sendLoginRequest: get(/sanctum/csrf-cookie)', error.response.data);
+          commit("setErrors", error.response.data, {root: true});
         });
     },
-    sendRegisterRequest({ commit }, data) {
-      commit("setErrors", {}, { root: true });
-      return axios
-        .post(process.env.VUE_APP_API_URL + "register", data)
-        .then(response => {
-          commit("setUserData", response.data.user);
-          localStorage.setItem("authToken", response.data.token);
-        });
-    },
-    sendLogoutRequest({ commit }) {
-      axios.post(process.env.VUE_APP_API_URL + "logout").then(() => {
-        commit("setUserData", null);
-        localStorage.removeItem("authToken");
-      });
-    },
-    sendVerifyResendRequest() {
-      return axios.get(process.env.VUE_APP_API_URL + "email/resend");
-    },
-    sendVerifyRequest({ dispatch }, hash) {
-      return axios
-        .get(process.env.VUE_APP_API_URL + "email/verify/" + hash)
-        .then(() => {
-          dispatch("getUserData");
-        });
-    }
   }
 };
