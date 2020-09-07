@@ -49,10 +49,15 @@ export default {
           commit("setErrors", error.response.data, {root: true});
         });
     },
-    getSecrets() {
-      return apiClient.get('/api/secrets').then(response => {
-          console.log(response);
-      }).catch(error => console.log('/api/secrets', error));
-  }
+    logoutUser({commit}) {
+      return apiClient
+        .post("/logout")
+        .then(response => {
+          console.log('[SUCCESS] logoutUser: post(/logout)', response.data);
+        }).catch(error => {
+          console.log('[ERROR] logoutUser: post(/logout)', error.response.data);
+          commit("setErrors", error.response.data, {root: true});
+        });
+    }
   }
 };

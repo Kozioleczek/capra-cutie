@@ -1,47 +1,52 @@
 <template>
-  <b-container fluid tag=section class="content py-5">
-    <b-row>
-      <b-col cols=12 class="text-center">
-        <h1>Zaloguj się</h1>
-      </b-col>
-      <b-col cols=12 class="mx-auto">
-          <b-form
-          action="#"
-          @submit.prevent="login"
-          >
-          <b-form-group
-              id="login"
-              label="Twój email"
-              label-for="login-input"
-              >
-                <b-form-input
-                id="login-input"
-                type="email"
-                v-model="details.email"
-                placeholder="example@example.com"
-                required
-                >
-                </b-form-input>
-              </b-form-group>
+<b-container tag=section class="content py-5">
+    <b-row class="h-75">
+      <b-col cols=12 class="my-auto">
+        <b-row>
+        <b-col cols=12 class="text-center">
+          <h1>Zaloguj się</h1>
+        </b-col>
+        <b-col cols=6 class="mx-auto">
+            <b-form
+            action="#"
+            @submit.prevent="login"
+            >
             <b-form-group
-              id="password"
-              label="Hasło"
-              label-for="password-input"
-              >
-                <b-form-input
-                id="password-input"
-                type="password"
-                v-model="details.password"
-                required
+                id="login"
+                label="Twój email"
+                label-for="login-input"
                 >
-                </b-form-input>
-              </b-form-group>
-             <b-button
-              variant="primary"
-              type="submit"
-              class="w-100 btn-lg mt-3">Zaloguj się</b-button>
-          </b-form>
-      </b-col>
+                  <b-form-input
+                  id="login-input"
+                  type="email"
+                  v-model="details.email"
+                  placeholder="example@example.com"
+                  required
+                  >
+                  </b-form-input>
+                </b-form-group>
+              <b-form-group
+                id="password"
+                label="Hasło"
+                label-for="password-input"
+                >
+                  <b-form-input
+                  id="password-input"
+                  type="password"
+                  v-model="details.password"
+                  required
+                  placeholder="Twoje hasło"
+                  >
+                  </b-form-input>
+                </b-form-group>
+              <b-button
+                variant="primary"
+                type="submit"
+                class="w-100 btn-lg mt-3">Zaloguj się</b-button>
+            </b-form>
+        </b-col>
+            </b-row>
+        </b-col>
     </b-row>
   </b-container>
 </template>

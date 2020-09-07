@@ -33,6 +33,10 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: 'MyLinks',
+  data() {
+    return {
+    };
+  },
   computed: {
     ...mapGetters(["errors"])
   },
@@ -48,14 +52,15 @@ export default {
     //   });
     // }
   },
-  methods: {
-    ...mapActions(["getUsersUrls"]),
-    getUrls: function() {
-      this.getUsersUrls().then(() => {
-        console.log('[INFO] My-Links.vue: Załadowano skrócone linki użytkownika');
-      });
-    }
-  },
+  // methods: {
+  //   ...mapActions(["getUsersUrls"]),
+  //   getUrls: function() {
+  //     this.getUsersUrls().then(() => {
+  //       console.log('[INFO] My-Links.vue: Załadowano skrócone linki użytkownika');
+  //     });
+  //   }
+  // },
+
 }
 </script>
 

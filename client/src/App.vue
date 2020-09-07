@@ -2,13 +2,20 @@
   <div id="app" class="full-height">
     <b-container fluid tag=header>
       <b-row>
-        <b-col cols=12 class="d-flex justify-content-between">
-            <img src="@/assets/capra-cutie-logo.png" alt="" class="c-logo">
+        <b-col
+          cols=12
+          class="d-flex"
+          :class="(this.$route.name === 'Redirect') ? 'justify-content-center' : 'justify-content-between'"
+          >
+            <router-link to="/"><img src="@/assets/capra-cutie-logo.png" alt="" class="c-logo"></router-link>
                 <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
-            <div class="user-space my-auto">
+            <div
+              class="user-space my-auto"
+              :class="(this.$route.name === 'Redirect') ? 'd-none' : 'd-block'"
+              >
               <router-link
                 to="/login"
                 v-if="this.$store.getters.isLogged === false"
@@ -27,6 +34,11 @@
                 class="mr-3 text-white">
                   Stwórz link
               </router-link>
+              <button
+              class="btn btn-outline-primary"
+              v-if="this.$store.getters.isLogged === true"
+              v-on:click="logout">
+              Wyloguj się</button>
             </div>
         </b-col>
       </b-row>
@@ -47,14 +59,26 @@
     </b-container>
   </div>
 </template>
-
+<script>
+import { mapGetters, mapActions } from "vuex";
+export default {
+  methods: {
+    ...mapActions("auth", ["logoutUser"]),
+    logout: function() {
+      this.logoutUser().then(() => {
+        console.log('[INFO] App.vue: Użytkownik został wylogowany');
+      });
+    }
+  },
+}
+</script>
 <style lang="scss">
 
 // Bootstrap and its default variables
 @import '../node_modules/bootstrap/scss/bootstrap';
 // BootstrapVue and its default variables
 @import '../node_modules/bootstrap-vue/src/index.scss';
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Poppins:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Poppins:wght@400,700;900&display=swap');
 
 body, html, #app{
   height: 100%;
@@ -74,6 +98,7 @@ body, html, #app{
 
 h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5{
     font-family: 'Poppins', sans-serif;
+    font-weight: 700;
 }
 .full-height{
     height: 100%;
