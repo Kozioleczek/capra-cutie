@@ -4,13 +4,29 @@
       <b-row>
         <b-col cols=12 class="d-flex justify-content-between">
             <img src="@/assets/capra-cutie-logo.png" alt="" class="c-logo">
-                <div id="nav">
+                <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </div>
+    </div> -->
             <div class="user-space my-auto">
-              <a href="#" class="mr-3 text-white">Zaloguj się</a>
-              <a href="#" class="text-white font-weight-bold">Zarejestruj się</a>
+              <router-link
+                to="/login"
+                v-if="this.$store.getters.isLogged === false"
+                class="mr-3 text-white">
+                Zaloguj się
+              </router-link>
+              <router-link
+                to="/my-links"
+                v-if="this.$store.getters.isLogged === true"
+                class="mr-3 text-white">
+                  Moje linki
+              </router-link>
+              <router-link
+                to="/create"
+                v-if="this.$store.getters.isLogged === true"
+                class="mr-3 text-white">
+                  Stwórz link
+              </router-link>
             </div>
         </b-col>
       </b-row>
@@ -75,6 +91,10 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5{
 
 .c-logo{
   width: 200px;
+}
+
+.c-bg-s{
+  background: #2F3139;
 }
 
 .c-text-p{

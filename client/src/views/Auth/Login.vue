@@ -77,7 +77,8 @@ export default {
     ...mapActions("auth", ["sendLoginRequest"]),
     login: function() {
       this.sendLoginRequest(this.details).then(() => {
-        console.log('Login.vue: Wysłane dane', this.details);
+        console.log('[INFO] Login.vue: Przekierowanie Moje Linki');
+        this.$router.push({ name: "MyLinks" });
       });
     }
   },

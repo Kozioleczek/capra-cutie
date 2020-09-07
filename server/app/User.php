@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Secret');
     }
+
+    public function urls()
+    {
+        return $this->hasMany('App\Urls');
+    }
 }

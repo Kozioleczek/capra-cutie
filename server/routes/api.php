@@ -8,3 +8,6 @@ Route::get('/secrets', 'SecretController@index');
 Route::middleware('auth:sanctum')->get('/test', function (Request $request) {
     return 'no dobrze byczq';
 });
+
+// Display urls belongs to specific user
+Route::get('/urls', 'UrlsController@index');

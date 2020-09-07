@@ -8,7 +8,7 @@ export default {
     //   email: '',
     //   password: '',
     // },
-    userData: null
+    userData: null,
   },
 
   getters: {
@@ -36,8 +36,9 @@ export default {
           console.log('[INFO] sendLoginRequest: post(/login)', data);
           apiClient.post('/login', data)
           .then(response => {
-            console.log('[SUCCESS] sendLoginRequest: post(/login)', response.data);
-            commit("SET_USER_DATA", response.data);
+            console.log('[SUCCESS] sendLoginRequest: post(/login)');
+            // commit("SET_USER_DATA", response.data);
+            commit("SET_LOGGED_STATUS", true, {root: true});
           }).catch(error => {
             console.log('[ERROR] sendLoginRequest: post(/login)', error.response.data);
             commit("setErrors", error.response.data, {root: true});
@@ -48,5 +49,10 @@ export default {
           commit("setErrors", error.response.data, {root: true});
         });
     },
+    getSecrets() {
+      return apiClient.get('/api/secrets').then(response => {
+          console.log(response);
+      }).catch(error => console.log('/api/secrets', error));
+  }
   }
 };

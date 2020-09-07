@@ -38,6 +38,25 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/Auth/Login.vue")
   },
+  {
+    path: "/create",
+    name: "Create",
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/Create.vue")
+  },
+  {
+    path: "/my-links",
+    name: "MyLinks",
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/My-Links.vue")
+  },
+  {
+    path: "/:url",
+    props: true,
+    name: "Redirect",
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/Redirect.vue")
+  },
   // {
   //   path: "/register",
   //   name: "Register",

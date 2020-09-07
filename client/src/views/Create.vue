@@ -1,48 +1,70 @@
 <template>
-  <div class="home mt-5">
-    <div class="alert alert-success" role="alert" v-if="success">
-      {{ success }}
-    </div>
-    <div class="alert alert-danger" role="alert" v-if="error">
-      {{ error }}
-    </div>
-    <h2 v-if="!user">Welcome, please log in or register</h2>
-    <h2 v-else-if="!user.email_verified_at">
-      Hello, {{ user.name }}! Registration successful, please check your inbox
-      and click confirmation link. If you did not receive the email, click
-      <a href="#" @click="verifyResend">here</a> to request another
-    </h2>
-    <h2 v-else>Hello, {{ user.name }}! You're in.</h2>
-  </div>
+<b-container id="create" fluid tag=section class="content py-5">
+    <b-row>
+      <b-col cols=12 class="text-center mb-4">
+        <h1 class="display-4 font-weight-bolder">
+          Wpisz swój link i  <span class="c-text-p">skróć go!</span>
+        </h1>
+
+      </b-col>
+      <b-col cols=8 class="mx-auto">
+         <b-form
+          action="#"
+          >
+          <b-input-group>
+            <b-form-input
+                type="url"
+                v-model="urlToShrink"
+                placeholder="https://example.com"
+                required
+            ></b-form-input>
+            <b-input-group-append>
+              <b-button variant="primary">Skróć link</b-button>
+            </b-input-group-append>
+
+          </b-input-group>
+         </b-form>
+          <div class="invalid-feedback d-block" v-if="error">
+              {{ error }}
+            </div>
+        <div
+        v-if="urlToShrink != null && urlToShrink != ''"
+        class="border w-100 py-4 text-center mt-4">
+          <b>Twój link docelowy: https://cut.capra.website/{{randomURL}}</b>
+        </div>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import randomstring from 'randomstring';
+import Regex from 'regex';
+
 export default {
   name: "Create",
   data() {
     return {
-      success: null,
-      error: null
+      urlToShrink: null,
+      randomURL: null,
+      error: null,
     };
   },
-  computed: {
-    ...mapGetters("auth", ["user"])
-  },
-  methods: {
-    ...mapActions("auth", ["sendVerifyResendRequest"]),
-    verifyResend() {
-      this.success = this.error = null;
-      this.sendVerifyResendRequest()
-        .then(() => {
-          this.success =
-            "A fresh verification link has been sent to your email address.";
-        })
-        .catch(error => {
-          this.error = "Error sending verification link.";
-          console.log(error.response);
-        });
-    }
+  // watch: {
+  //   urlToShrink() {
+  //     let regex = new Regex(/\/\/[^\s$.?#].[^\s]*$/);
+  //     let test = regex.test(this.urlToShrink);
+  //     console.log(test);
+  //     if(test){
+  //       this.error = "Twój link jest poprawny!";
+  //     }
+  //     else {
+  //       this.error = "Poprawny adres URL składa się z protokołu https:// lub http:// i kończy się na domenie np. .pl"
+  //     }
+  //   },
+  // },
+  mounted() {
+    this.randomURL = randomstring.generate(7);
   }
 };
 </script>
