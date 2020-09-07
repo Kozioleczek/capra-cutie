@@ -37,4 +37,14 @@ class UrlsController extends Controller
         $newurl->save();
         return response()->json(['success' => 'Requested URL was created', 200]);
     }
+
+    public function destroy(Request $request, $id){
+        $delurl = Urls::where('user_id', $request->user()->id)->where('short', $id)->firstOrFail();
+        // return $delurl;
+        if($delurl === null) {
+            return response()->json(['error' => 'Requested URL does not exist', 'reqdUrl' => $id, 200]);
+        }
+        $delurl->delete();
+        return response()->json(['success' => 'Requested URL was deleted', 'deletedUrl' => $id, 200]);
+    }
 }

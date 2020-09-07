@@ -12,13 +12,19 @@
             <div class="d-flex c-bg-s p-3 mb-3">
               <div class="w-50">
                   <small>Link docelowy:</small><br>
-                  <a :href="url.long">{{url.long}}</a><br>
+                  <a :href="url.long" class="text-white">{{url.long}}</a><br>
                   <small>Link CapraCutie:</small><br>
-                  <a :href="`https://localhost:8080/${url.short}`" class="c-text-p">https://localhost:8080/{{url.short}}</a>
+                  <a :href="`https://localhost:8080/${url.short}`" class="text-warning">https://localhost:8080/{{url.short}}</a>
               </div>
-              <div class="w-50">
-                  <small>Statystyki</small><br>
-                  <p>{{ url.visitors }}</p>
+              <div class="w-50 my-auto">
+                  <!-- <small>Statystyki</small><br>
+                  <p>{{ url.visitors }}</p> -->
+                  <button
+                  class="btn btn-sm btn-outline-light w-50"
+                  @click="deleteU(url.short)"
+                  >
+                    Usuń link
+                  </button>
               </div>
             </div>
           </b-col>
@@ -52,14 +58,13 @@ export default {
     //   });
     // }
   },
-  // methods: {
-  //   ...mapActions(["getUsersUrls"]),
-  //   getUrls: function() {
-  //     this.getUsersUrls().then(() => {
-  //       console.log('[INFO] My-Links.vue: Załadowano skrócone linki użytkownika');
-  //     });
-  //   }
-  // },
+  methods: {
+    // ...mapActions(["deleteUrl"]),
+    deleteU: function($short) {
+      console.log('[INFO] deleteU: $short',$short);
+      this.$store.dispatch('deleteUrl', $short);
+    }
+  },
 
 }
 </script>

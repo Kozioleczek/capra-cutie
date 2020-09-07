@@ -13,6 +13,7 @@ Route::middleware('auth:sanctum')->get('/test', function (Request $request) {
 Route::get('/urls', 'UrlsController@index');
 Route::get('/redirect-url', 'UrlsController@redirectURL');
 Route::post('/redirect-url', 'UrlsController@store');
+Route::delete('/redirect-url/{id}', 'UrlsController@destroy');
 //Return User Data
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

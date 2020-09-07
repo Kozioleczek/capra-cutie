@@ -81,7 +81,17 @@ export default new Vuex.Store({
           console.log('[ERROR] createNewUrl: post(/api/redirect-url/)', error.response.data);
           commit("setErrors", error.response.data);
         })
-    }
+    },
+    deleteUrl( { dispatch }, data ) {
+      return apiClient
+      .delete("/api/redirect-url/" + data)
+      .then(response => {
+        console.log('[SUCCESS] deleteUrl: delete(/api/redirect-url)', response.data);
+        dispatch('getUsersUrls');
+      }).catch(error => {
+        console.log('[ERROR] deleteUrl: delete(/api/redirect-url)', error.response.data);
+      });
+    },
   },
 
   modules: {

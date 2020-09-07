@@ -26,13 +26,13 @@
                 to="/my-links"
                 v-if="this.$store.getters.isLogged === true"
                 class="mr-3 text-white">
-                  Moje linki
+                 🎛 Moje linki
               </router-link>
               <router-link
                 to="/create"
                 v-if="this.$store.getters.isLogged === true"
                 class="mr-3 text-white">
-                  Stwórz link
+                 🔗 Stwórz link
               </router-link>
               <button
               class="btn btn-outline-light"
@@ -49,7 +49,7 @@
         <b-col cols=12 class="d-flex justify-content-between">
           <span class="my-auto">
             Twórca: Wojciech Kozioł <br>
-            <b>Zatrudnij mnie</b>
+            <a class="text-white" href="https://www.linkedin.com/in/wojciech-koziol/" target="_blank"><b>Zatrudnij mnie</b></a>
           </span>
           <span class="my-auto">
             Wszelkie prawa zastrzeżone 2020 CapraCutie

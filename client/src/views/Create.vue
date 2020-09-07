@@ -1,6 +1,8 @@
 <template>
 <b-container id="create" fluid tag=section class="content py-5">
-    <b-row>
+    <b-row class="h-75">
+      <b-col cols=12 class="my-auto">
+        <b-row>
       <b-col cols=12 class="text-center mb-4">
         <h1 class="display-4 font-weight-bolder">
           Wpisz swój link i  <span class="c-text-p">skróć go!</span>
@@ -36,6 +38,8 @@
         class="border w-100 py-4 text-center mt-4">
           <b>Twój link docelowy: https://cut.capra.website/{{details.short}}</b>
         </div>
+      </b-col>
+    </b-row>
       </b-col>
     </b-row>
   </b-container>
@@ -82,7 +86,7 @@ export default {
     create: function() {
       this.createNewUrl(this.details).then(() => {
         console.log('[INFO] Create.vue: Utworzono nowy URL. Przekierowanie na Moje Linki');
-        // this.$router.push({ name: "MyLinks" });
+        this.$router.push({ name: "MyLinks" });
       });
     }
   },
