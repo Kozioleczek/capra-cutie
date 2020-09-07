@@ -28,17 +28,17 @@ export default {
   },
 
   actions: {
-    sendLoginRequest({ commit }, data) {
+    sendLoginRequest({ commit, dispatch }, data) {
       return apiClient
         .get("/sanctum/csrf-cookie")
         .then(response => {
           console.log('[SUCCESS] sendLoginRequest: get(/sanctum/csrf-cookie)', response);
-          console.log('[INFO] sendLoginRequest: post(/login)', data);
+          // console.log('[INFO] sendLoginRequest: post(/login)', data);
+          console.log('[INFO] sendLoginRequest: post(/login)');
           apiClient.post('/login', data)
           .then(response => {
             console.log('[SUCCESS] sendLoginRequest: post(/login)');
-            // commit("SET_USER_DATA", response.data);
-            commit("SET_LOGGED_STATUS", true, {root: true});
+            dispatch("me");
           }).catch(error => {
             console.log('[ERROR] sendLoginRequest: post(/login)', error.response.data);
             commit("setErrors", error.response.data, {root: true});
@@ -49,15 +49,30 @@ export default {
           commit("setErrors", error.response.data, {root: true});
         });
     },
-    logoutUser({commit}) {
+    logoutUser({commit, dispatch}) {
       return apiClient
         .post("/logout")
         .then(response => {
           console.log('[SUCCESS] logoutUser: post(/logout)', response.data);
+          dispatch("me");
         }).catch(error => {
           console.log('[ERROR] logoutUser: post(/logout)', error.response.data);
           commit("setErrors", error.response.data, {root: true});
         });
-    }
+    },
+    me( {commit} ) {
+      console.log('me');
+      return apiClient
+        .get("/api/user")
+        .then(response => {
+          console.log('[SUCCESS] me: get(api/user):', response.data);
+          commit("SET_LOGGED_STATUS", true, {root: true});
+          commit("SET_USER_DATA", response.data);
+        }).catch(error => {
+          console.log('[ERROR] me: get(api/user):', error.response.data);
+          commit("SET_LOGGED_STATUS", false, {root: true});
+          commit("SET_USER_DATA", null);
+        });
+    },
   }
 };

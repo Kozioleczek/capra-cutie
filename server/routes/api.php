@@ -12,3 +12,9 @@ Route::middleware('auth:sanctum')->get('/test', function (Request $request) {
 // Display urls belongs to specific user
 Route::get('/urls', 'UrlsController@index');
 Route::get('/redirect-url', 'UrlsController@redirectURL');
+
+//Return User Data
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});

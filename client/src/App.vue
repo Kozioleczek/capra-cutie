@@ -66,7 +66,8 @@ export default {
     ...mapActions("auth", ["logoutUser"]),
     logout: function() {
       this.logoutUser().then(() => {
-        console.log('[INFO] App.vue: Użytkownik został wylogowany');
+        console.log('[INFO] App.vue: Użytkownik został wylogowany. Przekierowanie na /');
+        this.$router.push({ name: "Home" });
       });
     }
   },
