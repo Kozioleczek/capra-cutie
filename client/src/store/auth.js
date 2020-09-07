@@ -32,7 +32,7 @@ export default {
       return apiClient
         .get("/sanctum/csrf-cookie")
         .then(response => {
-          console.log('[SUCCESS] sendLoginRequest: get(/sanctum/csrf-cookie)', response);
+          console.log('[SUCCESS] sendLoginRequest: get(/sanctum/csrf-cookie)');
           // console.log('[INFO] sendLoginRequest: post(/login)', data);
           console.log('[INFO] sendLoginRequest: post(/login)');
           apiClient.post('/login', data)
@@ -65,7 +65,7 @@ export default {
       return apiClient
         .get("/api/user")
         .then(response => {
-          console.log('[SUCCESS] me: get(api/user):', response.data);
+          console.log('[SUCCESS] me: get(api/user):');
           commit("SET_LOGGED_STATUS", true, {root: true});
           commit("SET_USER_DATA", response.data);
         }).catch(error => {

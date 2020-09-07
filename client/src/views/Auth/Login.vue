@@ -1,5 +1,6 @@
 <template>
 <b-container tag=section class="content py-5">
+
     <b-row class="h-75">
       <b-col cols=12 class="my-auto">
         <b-row>
@@ -44,6 +45,14 @@
                 type="submit"
                 class="w-100 btn-lg mt-3">Zaloguj się</b-button>
             </b-form>
+
+            <div class="border border-warning p-4 mt-5">
+              <b>⚠️ Dane logowania:</b>
+              <p>Na ten moment nie dodałem rejestracji w aplikacji. W celu zalogowania się skorzystaj z moich danych:<br>
+              <strong>Login: hello@capraweb.pl</strong><br>
+              <strong>Hasło: 12345</strong>
+              </p>
+            </div>
         </b-col>
             </b-row>
         </b-col>

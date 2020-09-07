@@ -14,12 +14,16 @@
           <b-input-group>
             <b-form-input
                 type="url"
-                v-model="urlToShrink"
+                v-model="details.long"
                 placeholder="https://example.com"
                 required
             ></b-form-input>
             <b-input-group-append>
-              <b-button variant="primary">Skróć link</b-button>
+              <b-button
+              variant="primary"
+              @click="create"
+              >Skróć link
+              </b-button>
             </b-input-group-append>
 
           </b-input-group>
@@ -28,9 +32,9 @@
               {{ error }}
             </div>
         <div
-        v-if="urlToShrink != null && urlToShrink != ''"
+        v-if="details.long != null && details.long != ''"
         class="border w-100 py-4 text-center mt-4">
-          <b>Twój link docelowy: https://cut.capra.website/{{randomURL}}</b>
+          <b>Twój link docelowy: https://cut.capra.website/{{details.short}}</b>
         </div>
       </b-col>
     </b-row>
@@ -40,20 +44,23 @@
 <script>
 import randomstring from 'randomstring';
 import Regex from 'regex';
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Create",
   data() {
     return {
-      urlToShrink: null,
-      randomURL: null,
+      details: {
+        long: null,
+        short: null,
+      },
       error: null,
     };
   },
   // watch: {
-  //   urlToShrink() {
+  //   long() {
   //     let regex = new Regex(/\/\/[^\s$.?#].[^\s]*$/);
-  //     let test = regex.test(this.urlToShrink);
+  //     let test = regex.test(this.long);
   //     console.log(test);
   //     if(test){
   //       this.error = "Twój link jest poprawny!";
@@ -64,7 +71,20 @@ export default {
   //   },
   // },
   mounted() {
-    this.randomURL = randomstring.generate(7);
-  }
+    this.details.short = randomstring.generate(7);
+    this.$store.commit("setErrors", {});
+  },
+  computed: {
+    ...mapGetters(["errors"])
+  },
+  methods: {
+    ...mapActions(["createNewUrl"]),
+    create: function() {
+      this.createNewUrl(this.details).then(() => {
+        console.log('[INFO] Create.vue: Utworzono nowy URL. Przekierowanie na Moje Linki');
+        // this.$router.push({ name: "MyLinks" });
+      });
+    }
+  },
 };
 </script>

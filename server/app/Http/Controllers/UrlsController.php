@@ -25,4 +25,16 @@ class UrlsController extends Controller
         }
         return $url;
     }
+
+    public function store(Request $request){
+        $req = json_decode($request->getContent(), true);
+        // return $req;
+        $newurl = new Urls;
+        $newurl->user_id = $request->user()->id;
+        $newurl->long = $request->long;
+        $newurl->short = $request->short;
+        $newurl->visitors = 0;
+        $newurl->save();
+        return response()->json(['success' => 'Requested URL was created', 200]);
+    }
 }

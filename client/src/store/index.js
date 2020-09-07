@@ -50,7 +50,7 @@ export default new Vuex.Store({
       return apiClient
         .get("/api/urls")
         .then(response => {
-          console.log('[SUCCESS] getUsersUrls: get(/api/urls)', response);
+          console.log('[SUCCESS] getUsersUrls: get(/api/urls)');
           commit("SET_USER_URLS", response.data);
           commit("SET_URLS_STATUS", true);
         })
@@ -72,6 +72,16 @@ export default new Vuex.Store({
           commit("setErrors", error.response.data);
         });
     },
+    createNewUrl( {commit}, data) {
+      return apiClient
+        .post("/api/redirect-url", data)
+        .then(response => {
+          console.log('[SUCCESS] createNewUrl: post(/api/redirect-url/)', response.data);
+        }).catch(error => {
+          console.log('[ERROR] createNewUrl: post(/api/redirect-url/)', error.response.data);
+          commit("setErrors", error.response.data);
+        })
+    }
   },
 
   modules: {

@@ -19,7 +19,7 @@
               <router-link
                 to="/login"
                 v-if="this.$store.getters.isLogged === false"
-                class="mr-3 text-white">
+                class="mr-3 text-white btn btn-outline-light">
                 Zaloguj się
               </router-link>
               <router-link
@@ -35,10 +35,10 @@
                   Stwórz link
               </router-link>
               <button
-              class="btn btn-outline-primary"
+              class="btn btn-outline-light"
               v-if="this.$store.getters.isLogged === true"
               v-on:click="logout">
-              Wyloguj się</button>
+              🔚 Wyloguj się</button>
             </div>
         </b-col>
       </b-row>
