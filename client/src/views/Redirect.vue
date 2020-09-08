@@ -60,7 +60,7 @@ export default {
     this.$store.commit("setErrors", {});
     console.log(this.$router.currentRoute.params.redirect);
     // this.$store.dispatch('getRedirectUrl', { redirect: this.redirect });
-    // setTimeout(()=> window.location = this.$store.state.redirectUrl.long, 10000);
+    setTimeout(()=> window.location = this.$store.state.redirectUrl.long, 7000);
   },
   // beforeCreate() {
 
