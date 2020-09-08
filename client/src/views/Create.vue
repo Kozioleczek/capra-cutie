@@ -18,7 +18,9 @@
          <b-form
           action="#"
           >
-          <b-input-group>
+          <b-input-group
+          :state="state"
+          >
             <b-form-input
                 type="url"
                 v-model="details.long"
@@ -29,16 +31,19 @@
             <b-input-group-append>
               <b-button
               class="c-bg-p"
-              @click="create"
+              @click="check"
               >✂️ Skróć link
               </b-button>
             </b-input-group-append>
 
           </b-input-group>
          </b-form>
-          <div class="invalid-feedback d-block" v-if="error">
-              {{ error }}
-            </div>
+          <div class="invalid-feedback d-block" v-if="error == true">
+              {{ feedback }}
+          </div>
+            <div class="valid-feedback d-block" v-if="success == true">
+              {{ feedback }}
+          </div>
         <div
         v-if="details.long != null && details.long != ''"
         class="border w-100 py-4 text-center mt-4">
@@ -53,7 +58,7 @@
 
 <script>
 import randomstring from 'randomstring';
-import Regex from 'regex';
+// import Regex from 'regex';
 import Loading from 'vue-loading-overlay';
 import { mapGetters, mapActions } from "vuex";
 
@@ -65,25 +70,15 @@ export default {
   data() {
     return {
       details: {
-        long: null,
+        long: '',
         short: null,
       },
-      error: null,
+      error: false,
+      success: false,
+      feedback: '',
+      state: null,
     };
   },
-  // watch: {
-  //   long() {
-  //     let regex = new Regex(/\/\/[^\s$.?#].[^\s]*$/);
-  //     let test = regex.test(this.long);
-  //     console.log(test);
-  //     if(test){
-  //       this.error = "Twój link jest poprawny!";
-  //     }
-  //     else {
-  //       this.error = "Poprawny adres URL składa się z protokołu https:// lub http:// i kończy się na domenie np. .pl"
-  //     }
-  //   },
-  // },
   mounted() {
     this.details.short = randomstring.generate(7);
     this.$store.commit("setErrors", {});
@@ -98,7 +93,23 @@ export default {
         console.log('[INFO] Create.vue: Utworzono nowy URL. Przekierowanie na Moje Linki');
         this.$router.push({ name: "MyLinks" });
       });
-    }
+    },
+    check: function () {
+      console.log('check', this.details.long);
+      const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+      if(regex.test(this.details.long) === true){
+        console.log('[SUCCESS] Correct URL: ', regex.test(this.details.long));
+        this.success = true;
+        this.error = false;
+        this.feedback = 'Twój link jest poprawny!';
+        this.create();
+      }
+      if(regex.test(this.details.long) === false){
+           this.error = true;
+          this.success = false;
+          this.feedback = 'Twój link jest niepoprawny! Poprawny link wygląda tak: https://wp.pl';
+      }
+      },
   },
 };
 </script>
