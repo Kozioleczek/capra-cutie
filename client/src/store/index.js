@@ -9,11 +9,12 @@ export default new Vuex.Store({
   state: {
     errors: [],
     isLogged: false,
+    isLoggedLoading: false,
     loadedUrls: null,
     isUrlsLoading: false,
     isUrlsSuccess: false,
     redirectUrl: null,
-    isRedirectUrlLoaded: false,
+    isRedirectUrlLoading: false,
   },
 
   getters: {
@@ -27,8 +28,12 @@ export default new Vuex.Store({
     setErrors(state, errors) {
       state.errors = errors;
     },
+    // Loging in
     SET_LOGGED_STATUS(state, status) {
       state.isLogged = status;
+    },
+    SET_LOGGED_LOADING(state, status) {
+      state.isLoggedLoading = status;
     },
     // MyLinks
     SET_URLS_STATUS(state, status) {
@@ -45,7 +50,7 @@ export default new Vuex.Store({
       state.redirectUrl = url;
     },
     SET_REDIRECT_STATUS(state, status) {
-      state.isRedirectUrlLoaded = status;
+      state.isRedirectUrlLoading = status;
     },
   },
 
@@ -81,6 +86,7 @@ export default new Vuex.Store({
         });
     },
     createNewUrl( {commit}, data) {
+      commit("SET_REDIRECT_STATUS", true);
       return apiClient
         .post("/api/redirect-url", data)
         .then(response => {
@@ -88,7 +94,9 @@ export default new Vuex.Store({
         }).catch(error => {
           console.log('[ERROR] createNewUrl: post(/api/redirect-url/)', error.response.data);
           commit("setErrors", error.response.data);
-        })
+        }).finally(() => {
+          commit("SET_REDIRECT_STATUS", false);
+        });
     },
     deleteUrl( { dispatch }, data ) {
       return apiClient

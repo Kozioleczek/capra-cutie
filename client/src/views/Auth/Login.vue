@@ -40,10 +40,19 @@
                   >
                   </b-form-input>
                 </b-form-group>
-              <b-button
+              <!-- <b-button
                 variant="primary"
                 type="submit"
-                class="w-100 btn-lg mt-3">Zaloguj się</b-button>
+                class="w-100 btn-lg mt-3">Zaloguj się
+              </b-button> -->
+                <VueLoadingButton
+                  type="submit"
+                  class="w-100 btn-lg mt-3 bg-warning text-dark"
+                  :styled="true"
+                  :loading="$store.state.isLoggedLoading"
+                >
+                  Zaloguj się
+                  </VueLoadingButton>
             </b-form>
 
             <div class="border border-warning p-4 mt-5">
@@ -61,10 +70,15 @@
 </template>
 
 <script>
+import VueLoadingButton from 'vue-loading-button';
+
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: 'Login',
+  components: {
+    VueLoadingButton,
+  },
   data() {
     return {
       details: {

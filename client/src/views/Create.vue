@@ -1,5 +1,10 @@
 <template>
-<b-container id="create" fluid tag=section class="content py-5">
+<b-container id="create" tag=section class="content py-5">
+    <loading
+        :active.sync="$store.state.isRedirectUrlLoading"
+        :is-full-page="true"
+        :color="'#ffc107'"
+    />
     <b-row class="h-75">
       <b-col cols=12 class="my-auto">
         <b-row>
@@ -17,14 +22,15 @@
             <b-form-input
                 type="url"
                 v-model="details.long"
+                class="form-control-lg"
                 placeholder="https://example.com"
                 required
             ></b-form-input>
             <b-input-group-append>
               <b-button
-              variant="primary"
+              class="c-bg-p"
               @click="create"
-              >Skróć link
+              >✂️ Skróć link
               </b-button>
             </b-input-group-append>
 
@@ -48,10 +54,14 @@
 <script>
 import randomstring from 'randomstring';
 import Regex from 'regex';
+import Loading from 'vue-loading-overlay';
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Create",
+  components: {
+      Loading,
+  },
   data() {
     return {
       details: {

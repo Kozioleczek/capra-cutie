@@ -30,6 +30,7 @@ export default {
   actions: {
     async sendLoginRequest({ commit, dispatch }, data) {
       console.log('[INFO] sendLoginRequest: get(/sanctum/csrf-cookie)');
+      commit("SET_LOGGED_LOADING", true, {root: true});
       // Get CSRF Cookie
       await apiClient
         .get("/sanctum/csrf-cookie")
@@ -50,6 +51,8 @@ export default {
         }).catch(error => {
           console.log('[ERROR] sendLoginRequest: post(/login)', error.response.data);
           commit("setErrors", error.response.data, {root: true});
+        }).finally(() => {
+          commit("SET_LOGGED_LOADING", false, {root: true});
         });
 
         // Call set local auth data
