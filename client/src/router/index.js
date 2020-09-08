@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import store from '@/store';
 Vue.use(VueRouter);
 
 // const guest = (to, from, next) => {
@@ -41,12 +42,18 @@ const routes = [
   {
     path: "/create",
     name: "Create",
+    meta: {
+      requiresLogin: true
+    },
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/Create.vue")
   },
   {
     path: "/my-links",
     name: "MyLinks",
+    meta: {
+      requiresLogin: true
+    },
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/My-Links.vue")
   },
@@ -78,6 +85,18 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  console.log('[INFO] router: to: ', to, 'from: ', from, 'next: ', next);
+  if (to.matched.some(record => record.meta.requiresLogin) && store.state.isLogged == false) {
+    console.log('[INFO] router.js: You need to log in before you can perform this action.');
+    store.commit("setErrors", "You need to log in before you can perform this action.")
+    next("/login")
+} else {
+  console.log('[INFO] router.js: OK');
+    next()
+}
 });
 
 export default router;
