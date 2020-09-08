@@ -10,7 +10,8 @@ export default new Vuex.Store({
     errors: [],
     isLogged: false,
     loadedUrls: null,
-    isUrlsLoaded: false,
+    isUrlsLoading: false,
+    isUrlsSuccess: false,
     redirectUrl: null,
     isRedirectUrlLoaded: false,
   },
@@ -19,7 +20,7 @@ export default new Vuex.Store({
     errors: state => state.errors,
     isLogged: state => state.isLogged,
     loadedUrls: state => state.loadedUrls,
-    isUrlsLoaded: state => state.isUrlsLoaded,
+    isUrlsSuccess: state => state.isUrlsSuccess,
   },
 
   mutations: {
@@ -29,14 +30,17 @@ export default new Vuex.Store({
     SET_LOGGED_STATUS(state, status) {
       state.isLogged = status;
     },
-
+    // MyLinks
     SET_URLS_STATUS(state, status) {
-      state.isUrlsLoaded = status;
+      state.isUrlsSuccess = status;
+    },
+    SET_URLS_LOADING(state, status) {
+      state.isUrlsLoading = status;
     },
     SET_USER_URLS(state, urls) {
       state.loadedUrls = urls;
     },
-
+    //Redirecing
     SET_REDIRECT_URL(state, url) {
       state.redirectUrl = url;
     },
@@ -47,6 +51,8 @@ export default new Vuex.Store({
 
   actions: {
     getUsersUrls({commit}) {
+      commit("SET_URLS_LOADING", true);
+      commit("SET_URLS_STATUS",  false);
       return apiClient
         .get("/api/urls")
         .then(response => {
@@ -57,6 +63,8 @@ export default new Vuex.Store({
         .catch(error => {
           console.log('[ERROR] getUsersUrls: get(/api/urls)', error.response.data);
           commit("setErrors", error.response.data);
+        }).finally(() => {
+          commit("SET_URLS_LOADING", false);
         });
     },
     getRedirectUrl( {commit}, data ) {

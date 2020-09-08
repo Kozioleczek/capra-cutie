@@ -5,8 +5,13 @@
         <h1 class="display-4 font-weight-bolder">Twoje krótkie linki</h1>
         <p class="lead">Znajdziesz tutaj wszystkie linki, które utworzyłeś</p>
       </b-col>
-
-      <b-col cols=12 v-if="$store.state.isUrlsLoaded === true">
+      <!-- v-if="$store.state.isUrlsSuccess === true" -->
+      <b-col cols=12 >
+        <loading
+        :active.sync="$store.state.isUrlsLoading"
+        :is-full-page="false"
+        :color="'#ffc107'"
+        />
         <b-row>
           <b-col v-for="url in this.$store.getters.loadedUrls" :key="url.id" cols=6>
             <div class="d-flex c-bg-s p-3 mb-3">
@@ -36,9 +41,14 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   name: 'MyLinks',
+  components: {
+      Loading,
+  },
   data() {
     return {
     };
