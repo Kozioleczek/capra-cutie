@@ -1,7 +1,13 @@
 <template>
   <b-container tag=section class="content py-5">
     <b-row class="h-75">
+
       <b-col cols=12 class="my-auto">
+                <loading
+        :active.sync="$store.state.isRedirectUrlGetting"
+        :is-full-page="false"
+        :color="'#ffc107'"
+    />
         <b-row>
       <b-col cols=12 class="text-center mb-5">
         <h1><small class="font-weight-normal">Za chwilę zostaniesz przekierowany na: </small><br>
@@ -35,9 +41,13 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import Loading from 'vue-loading-overlay';
 export default {
   name: "Redirect",
   props: ["redirect"],
+    components: {
+      Loading,
+  },
   data() {
     return {
       temp: null,
@@ -49,8 +59,8 @@ export default {
   mounted() {
     this.$store.commit("setErrors", {});
     console.log(this.$router.currentRoute.params.redirect);
-    this.$store.dispatch('getRedirectUrl', { redirect: this.redirect });
-    setTimeout(()=> window.location = this.$store.state.redirectUrl.long, 10000)
+    // this.$store.dispatch('getRedirectUrl', { redirect: this.redirect });
+    // setTimeout(()=> window.location = this.$store.state.redirectUrl.long, 10000);
   },
   // beforeCreate() {
 

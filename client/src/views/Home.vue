@@ -7,8 +7,20 @@
           ze swoim linkiem
         </h1>
         <p class="lead mb-4">Stwórz krótki link wraz ze statystykami</p>
-        <button class="btn btn-primary btn-lg mb-2">Stwórz swój krótki link</button>
-        <span class="d-block">lub <span class="c-text-p">Zaloguj się</span></span>
+        <router-link
+        to="/create"
+        class="btn c-bg-p btn-lg mb-2"
+        >
+        Stwórz swój krótki link
+        </router-link>
+        <span class="d-block">lub
+           <router-link
+        to="/login"
+        class="c-text-p"
+        >
+          Zaloguj się
+        </router-link>
+        </span>
       </b-col>
     </b-row>
   </b-container>

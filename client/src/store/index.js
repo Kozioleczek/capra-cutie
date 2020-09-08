@@ -15,6 +15,7 @@ export default new Vuex.Store({
     isUrlsSuccess: false,
     redirectUrl: null,
     isRedirectUrlLoading: false,
+    isRedirectUrlGetting: false,
   },
 
   getters: {
@@ -45,12 +46,16 @@ export default new Vuex.Store({
     SET_USER_URLS(state, urls) {
       state.loadedUrls = urls;
     },
-    //Redirecing
+    // Create Redirecing
     SET_REDIRECT_URL(state, url) {
       state.redirectUrl = url;
     },
     SET_REDIRECT_STATUS(state, status) {
       state.isRedirectUrlLoading = status;
+    },
+    // Do Redirect
+    SET_GETTING_REDIRECT_STATUS(state, status) {
+      state.isRedirectUrlGetting = status;
     },
   },
 
@@ -72,17 +77,20 @@ export default new Vuex.Store({
           commit("SET_URLS_LOADING", false);
         });
     },
-    getRedirectUrl( {commit}, data ) {
-      return apiClient
+    async getRedirectUrl( {commit}, data ) {
+      commit("SET_GETTING_REDIRECT_STATUS", true);
+      await apiClient
         .get("/api/redirect-url?short="  + data.redirect )
         .then(response => {
           console.log('[SUCCESS] getRedirectUrl: get(/api/redirect-url/)', response.data);
           commit("SET_REDIRECT_URL", response.data);
-          commit("SET_REDIRECT_STATUS", true);
+          // commit("SET_REDIRECT_STATUS", true);
         })
         .catch(error => {
           console.log('[ERROR] getRedirectUrl: get(/api/redirect-url/)', error.response.data);
           commit("setErrors", error.response.data);
+        }).finally(() => {
+          commit("SET_GETTING_REDIRECT_STATUS", false);
         });
     },
     createNewUrl( {commit}, data) {

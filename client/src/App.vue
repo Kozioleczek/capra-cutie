@@ -81,16 +81,18 @@ export default {
 @import '../node_modules/bootstrap-vue/src/index.scss';
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Poppins:wght@400,700;900&display=swap');
 
-body, html, #app{
+body, html{
   height: 100%;
+  background: #343741;
+  color: white;
 }
 
 #app {
   font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: white;
-  background: #343741;
+
+
   padding-left: 5em;
   padding-right: 5em;
   padding-top: 3em;

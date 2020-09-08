@@ -61,6 +61,12 @@ const routes = [
     path: "/:redirect",
     props: true,
     name: "Redirect",
+    beforeEnter: (to, from, next) => {
+      console.log('[INFO] router.js: /:redirect', to.params.redirect);
+      store.dispatch('getRedirectUrl', { redirect: to.params.redirect }).then(() => {
+        next();
+      });
+    },
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/Redirect.vue")
   },
