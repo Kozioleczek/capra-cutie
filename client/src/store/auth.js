@@ -28,40 +28,47 @@ export default {
   },
 
   actions: {
-    sendLoginRequest({ commit, dispatch }, data) {
-      return apiClient
+    async sendLoginRequest({ commit, dispatch }, data) {
+      console.log('[INFO] sendLoginRequest: get(/sanctum/csrf-cookie)');
+      // Get CSRF Cookie
+      await apiClient
         .get("/sanctum/csrf-cookie")
         .then(response => {
           console.log('[SUCCESS] sendLoginRequest: get(/sanctum/csrf-cookie)');
-          // console.log('[INFO] sendLoginRequest: post(/login)', data);
-          console.log('[INFO] sendLoginRequest: post(/login)');
-          apiClient.post('/login', data)
-          .then(response => {
-            console.log('[SUCCESS] sendLoginRequest: post(/login)');
-            dispatch("me");
-          }).catch(error => {
-            console.log('[ERROR] sendLoginRequest: post(/login)', error.response.data);
-            commit("setErrors", error.response.data, {root: true});
-          });
         })
         .catch(error => {
           console.log('[ERROR] sendLoginRequest: get(/sanctum/csrf-cookie)', error.response.data);
           commit("setErrors", error.response.data, {root: true});
         });
+
+      // Login to user account
+      console.log('[INFO] sendLoginRequest: post(/login)');
+      await apiClient
+        .post('/login', data)
+        .then(response => {
+          console.log('[SUCCESS] sendLoginRequest: post(/login)');
+        }).catch(error => {
+          console.log('[ERROR] sendLoginRequest: post(/login)', error.response.data);
+          commit("setErrors", error.response.data, {root: true});
+        });
+
+        // Call set local auth data
+      return dispatch("me");
     },
-    logoutUser({commit, dispatch}) {
-      return apiClient
+    async logoutUser({commit, dispatch}) {
+      await apiClient
         .post("/logout")
         .then(response => {
           console.log('[SUCCESS] logoutUser: post(/logout)', response.data);
-          dispatch("me");
+
         }).catch(error => {
           console.log('[ERROR] logoutUser: post(/logout)', error.response.data);
           commit("setErrors", error.response.data, {root: true});
         });
+      return dispatch("me");
     },
     me( {commit} ) {
-      console.log('me');
+      console.log('[INFO] me: Getting data');
       return apiClient
         .get("/api/user")
         .then(response => {
