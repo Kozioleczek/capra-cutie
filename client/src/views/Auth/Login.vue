@@ -7,7 +7,7 @@
         <b-col cols=12 class="text-center">
           <h1>Zaloguj się</h1>
         </b-col>
-        <b-col cols=6 class="mx-auto">
+        <b-col cols=12 lg="6" class="mx-auto">
             <b-form
             action="#"
             @submit.prevent="login"

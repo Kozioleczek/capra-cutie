@@ -1,7 +1,7 @@
 <template>
   <b-container fluid tag=section class="content">
     <b-row class="h-100">
-      <b-col cols=12 class="text-center my-auto">
+      <b-col cols=12 class="text-lg-center  text-left my-auto">
         <h1 class="display-4 font-weight-bolder">
           Pójdź na <span class="c-text-p">skróty</span>
           ze swoim linkiem

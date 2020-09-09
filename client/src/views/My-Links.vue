@@ -13,7 +13,7 @@
         :color="'#ffc107'"
         />
         <b-row>
-          <b-col v-for="url in this.$store.getters.loadedUrls" :key="url.id" cols=6>
+          <b-col v-for="url in this.$store.getters.loadedUrls" :key="url.id" cols=12 lg="6">
             <div class="d-flex c-bg-s p-3 mb-3">
               <div class="w-50">
                   <small>Link docelowy:</small><br>

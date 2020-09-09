@@ -14,14 +14,14 @@
         <big>{{$store.state.redirectUrl.long}}</big>
         </h1>
       </b-col>
-      <b-col cols=7 class="mx-auto text-center">
+      <b-col cols=12 lg=7 class="mx-auto text-center">
         <div class="d-flex c-bg-s box p-4">
             <div class="row no-gutters">
-              <div class="col-6 my-auto">
-                <img src="@/assets/obrobione.jpg" alt="" class=" my-photo">
+              <div class="col-lg-6 col-12 my-lg-auto mb-3 mb-lg-0">
+                <img src="@/assets/obrobione.jpg" alt="" class="my-photo">
                 <b class="d-block mt-2">Wojciech Kozioł</b>
               </div>
-              <div class="col-6 my-auto text-left">
+              <div class="col-lg-6 col-12 my-auto text-lg-left text-center">
                 <h2 class="h3">Czy wiesz, że...</h2>
                 <p class="lead"><b>Facet na zdjęciu szuka pracy jako Junior Frontend Developer?</b>
                 </p>
@@ -76,11 +76,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scope>
-  .my-photo{
-    border-radius: 100%;
-    width: 200px;
-  }
+<style lang="scss">
 
   .box{
     border-radius: 25px;

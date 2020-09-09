@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="full-height">
-    <b-container fluid tag=header>
+    <b-container fluid tag=header class="py-3 py-lg-0">
       <b-row>
         <b-col
           cols=12
@@ -14,7 +14,7 @@
     </div> -->
             <div
               class="user-space my-auto"
-              :class="(this.$route.name === 'Redirect') ? 'd-none' : 'd-block'"
+              :class="(this.$route.name === 'Redirect') ? 'd-none' : 'd-flex'"
               >
               <router-link
                 to="/login"
@@ -25,13 +25,13 @@
               <router-link
                 to="/my-links"
                 v-if="this.$store.getters.isLogged === true"
-                class="mr-3 text-white">
+                class="mr-3 text-white d-none d-lg-block my-auto">
                  🎛 Moje linki
               </router-link>
               <router-link
                 to="/create"
                 v-if="this.$store.getters.isLogged === true"
-                class="mr-3 text-white">
+                class="mr-3 text-white d-none d-lg-block my-auto">
                  🔗 Stwórz link
               </router-link>
               <button
@@ -41,17 +41,35 @@
               🔚 Wyloguj się</button>
             </div>
         </b-col>
+        <b-col
+        cols=12
+        class="py-3"
+        :class="(this.$route.name === 'Redirect') ? 'd-none' : 'd-block d-lg-none'"
+        >
+              <router-link
+                to="/my-links"
+                v-if="this.$store.getters.isLogged === true"
+                class="mr-3 text-white">
+                 🎛 Moje linki
+              </router-link>
+               <router-link
+                to="/create"
+                v-if="this.$store.getters.isLogged === true"
+                class="mr-3 text-white">
+                 🔗 Stwórz link
+              </router-link>
+        </b-col>
       </b-row>
     </b-container>
     <router-view/>
     <b-container fluid tag=footer class="footer">
       <b-row>
-        <b-col cols=12 class="d-flex justify-content-between">
-          <span class="my-auto">
+        <b-col cols=12 class="d-lg-flex d-block justify-content-between">
+          <span class="my-lg-auto mb-3 d-block">
             Twórca: Wojciech Kozioł <br>
             <a class="text-white" href="https://www.linkedin.com/in/wojciech-koziol/" target="_blank"><b>Zatrudnij mnie</b></a>
           </span>
-          <span class="my-auto">
+          <span class="my-lg-auto mb-3 d-block">
             Wszelkie prawa zastrzeżone 2020 CapraCutie
           </span>
         </b-col>
@@ -75,6 +93,9 @@ export default {
 </script>
 <style lang="scss">
 
+
+$enable-responsive-font-sizes: true;
+
 // Bootstrap and its default variables
 @import '../node_modules/bootstrap/scss/bootstrap';
 // BootstrapVue and its default variables
@@ -86,17 +107,33 @@ body, html{
   background: #343741;
   color: white;
 }
-
+  .my-photo{
+    border-radius: 100%;
+    width: 100px;
+    @include media-breakpoint-only(lg) {
+      width: 200px;
+    }
+    @include media-breakpoint-only(xl) {
+      width: 200px;
+    }
+  }
 #app {
   font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-
-  padding-left: 5em;
+  @include media-breakpoint-only(lg) {
+        padding-left: 5em;
   padding-right: 5em;
   padding-top: 3em;
   padding-bottom: 3em;
+  }
+
+  @include media-breakpoint-only(xl) {
+        padding-left: 5em;
+  padding-right: 5em;
+  padding-top: 3em;
+  padding-bottom: 3em;
+  }
 }
 
 h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5{
@@ -118,7 +155,10 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5{
 }
 
 .c-logo{
-  width: 200px;
+  width: 150px;
+  @include media-breakpoint-only(lg) {
+    width: 200px;
+  }
 }
 
 .c-bg-s{

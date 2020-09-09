@@ -14,10 +14,8 @@
         </h1>
 
       </b-col>
-      <b-col cols=8 class="mx-auto">
-         <b-form
-          action="#"
-          >
+      <b-col cols=12 lg=8 class="mx-auto">
+
           <b-input-group
           :state="state"
           >
@@ -37,7 +35,7 @@
             </b-input-group-append>
 
           </b-input-group>
-         </b-form>
+
           <div class="invalid-feedback d-block" v-if="error == true">
               {{ feedback }}
           </div>
@@ -96,7 +94,7 @@ export default {
     },
     check: function () {
       console.log('check', this.details.long);
-      const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+      const regex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
       if(regex.test(this.details.long) === true){
         console.log('[SUCCESS] Correct URL: ', regex.test(this.details.long));
         this.success = true;
