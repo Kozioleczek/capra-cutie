@@ -8,29 +8,30 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
-  props: ["hash"],
+  props: ['hash'],
   data() {
     return {
-      error: null
+      error: null,
     };
   },
   mounted() {
     this.sendVerifyRequest(this.hash)
       .then(() => {
-        this.$router.push("/");
+        this.$router.push('/');
       })
       .catch(error => {
         console.log(error.response);
-        this.error = "Error verifying email";
+        this.error = 'Error verifying email';
       });
   },
   computed: {
-    ...mapGetters("auth", ["user"])
+    ...mapGetters('auth', ['user']),
   },
   methods: {
-    ...mapActions("auth", ["sendVerifyRequest"])
-  }
+    ...mapActions('auth', ['sendVerifyRequest']),
+  },
 };
 </script>

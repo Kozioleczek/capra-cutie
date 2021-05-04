@@ -1,7 +1,7 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import auth from "./auth";
-import apiClient from "../services/api";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import auth from './auth';
+import apiClient from '../services/api';
 
 Vue.use(Vuex);
 
@@ -19,10 +19,10 @@ export default new Vuex.Store({
   },
 
   getters: {
-    errors: state => state.errors,
-    isLogged: state => state.isLogged,
-    loadedUrls: state => state.loadedUrls,
-    isUrlsSuccess: state => state.isUrlsSuccess,
+    errors: (state) => state.errors,
+    isLogged: (state) => state.isLogged,
+    loadedUrls: (state) => state.loadedUrls,
+    isUrlsSuccess: (state) => state.isUrlsSuccess,
   },
 
   mutations: {
@@ -60,65 +60,70 @@ export default new Vuex.Store({
   },
 
   actions: {
-    getUsersUrls({commit}) {
-      commit("SET_URLS_LOADING", true);
-      commit("SET_URLS_STATUS",  false);
+    getUsersUrls({ commit }) {
+      commit('SET_URLS_LOADING', true);
+      commit('SET_URLS_STATUS', false);
       return apiClient
-        .get("/api/urls")
-        .then(response => {
+        .get('/api/urls')
+        .then((response) => {
           console.log('[SUCCESS] getUsersUrls: get(/api/urls)');
-          commit("SET_USER_URLS", response.data);
-          commit("SET_URLS_STATUS", true);
+          commit('SET_USER_URLS', response.data);
+          commit('SET_URLS_STATUS', true);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log('[ERROR] getUsersUrls: get(/api/urls)', error.response.data);
-          commit("setErrors", error.response.data);
-        }).finally(() => {
-          commit("SET_URLS_LOADING", false);
+          commit('setErrors', error.response.data);
+        })
+        .finally(() => {
+          commit('SET_URLS_LOADING', false);
         });
     },
-    async getRedirectUrl( {commit}, data ) {
-      commit("SET_GETTING_REDIRECT_STATUS", true);
+    async getRedirectUrl({ commit }, data) {
+      commit('SET_GETTING_REDIRECT_STATUS', true);
       await apiClient
-        .get("/api/redirect-url?short="  + data.redirect )
-        .then(response => {
+        .get(`/api/redirect-url?short=${data.redirect}`)
+        .then((response) => {
           console.log('[SUCCESS] getRedirectUrl: get(/api/redirect-url/)', response.data);
-          commit("SET_REDIRECT_URL", response.data);
+          commit('SET_REDIRECT_URL', response.data);
           // commit("SET_REDIRECT_STATUS", true);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log('[ERROR] getRedirectUrl: get(/api/redirect-url/)', error.response.data);
-          commit("setErrors", error.response.data);
-        }).finally(() => {
-          commit("SET_GETTING_REDIRECT_STATUS", false);
+          commit('setErrors', error.response.data);
+        })
+        .finally(() => {
+          commit('SET_GETTING_REDIRECT_STATUS', false);
         });
     },
-    createNewUrl( {commit}, data) {
-      commit("SET_REDIRECT_STATUS", true);
+    createNewUrl({ commit }, data) {
+      commit('SET_REDIRECT_STATUS', true);
       return apiClient
-        .post("/api/redirect-url", data)
-        .then(response => {
+        .post('/api/redirect-url', data)
+        .then((response) => {
           console.log('[SUCCESS] createNewUrl: post(/api/redirect-url/)', response.data);
-        }).catch(error => {
+        })
+        .catch((error) => {
           console.log('[ERROR] createNewUrl: post(/api/redirect-url/)', error.response.data);
-          commit("setErrors", error.response.data);
-        }).finally(() => {
-          commit("SET_REDIRECT_STATUS", false);
+          commit('setErrors', error.response.data);
+        })
+        .finally(() => {
+          commit('SET_REDIRECT_STATUS', false);
         });
     },
-    deleteUrl( { dispatch }, data ) {
+    deleteUrl({ dispatch }, data) {
       return apiClient
-      .delete("/api/redirect-url/" + data)
-      .then(response => {
-        console.log('[SUCCESS] deleteUrl: delete(/api/redirect-url)', response.data);
-        dispatch('getUsersUrls');
-      }).catch(error => {
-        console.log('[ERROR] deleteUrl: delete(/api/redirect-url)', error.response.data);
-      });
+        .delete(`/api/redirect-url/${data}`)
+        .then((response) => {
+          console.log('[SUCCESS] deleteUrl: delete(/api/redirect-url)', response.data);
+          dispatch('getUsersUrls');
+        })
+        .catch((error) => {
+          console.log('[ERROR] deleteUrl: delete(/api/redirect-url)', error.response.data);
+        });
     },
   },
 
   modules: {
-    auth
-  }
+    auth,
+  },
 });

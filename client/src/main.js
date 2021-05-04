@@ -9,9 +9,9 @@ Vue.config.productionTip = false;
 Vue.use(VueBootstrap);
 
 store.dispatch('auth/me').then(() => {
-new Vue({
-  router,
-  store,
-  render: (h) => h(App),
-}).$mount('#app');
+  new Vue({
+    router,
+    store,
+    render: (h) => h(App),
+  }).$mount('#app');
 });
